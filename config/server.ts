@@ -21,5 +21,13 @@ export default ({ env }) => ({
       headers: '*',
       origin: ['https://strapi-production-4f32.up.railway.app'],
     },
+    logger: {
+      level: env('LOG_LEVEL', 'info'),
+      requests: true,
+    },
+  },
+  // Ensure server starts properly
+  server: {
+    socket: env('SOCKET'),
   },
 });

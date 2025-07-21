@@ -10,7 +10,8 @@
     "dev": "strapi develop",
     "develop": "strapi develop",
     "start": "strapi start",
-    "railway": "strapi develop",
+    "railway": "strapi develop --no-build",
+    "railway-dev": "NODE_ENV=development strapi develop --no-build --watch-admin",
     "strapi": "strapi",
     "upgrade": "npx @strapi/upgrade latest",
     "upgrade:dry": "npx @strapi/upgrade latest --dry"
