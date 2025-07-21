@@ -9,18 +9,28 @@ export default (config: UserConfig) => {
     },
 
     server: {
-      // 1. Bind to all interfaces so Railway’s load‑balancer can reach it
+      // 1. Bind to all interfaces so Railway's load‑balancer can reach it
       host: '0.0.0.0',
       // 2. Use the same port that Railway exposes (1337 by default)
       port: Number(process.env.PORT) || 1337,
       // 3. Allow HMR to connect back over wss:// on standard HTTPS port
-      hmr: {
+      hmr: process.env.NODE_ENV === 'development' && !process.env.CI ? {
         protocol: 'wss',
         host: 'strapi-production-4f32.up.railway.app',
         port: 443,
-      },
+      } : false,
       // 4. Skip host‑header blocking
       allowedHosts: true,
+    },
+
+    // Disable overlay errors that can crash the dev server
+    optimizeDeps: {
+      force: false,
+    },
+
+    // Better error handling for production-like environments
+    define: {
+      global: 'globalThis',
     },
   });
 };
