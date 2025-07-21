@@ -26,8 +26,4 @@ export default ({ env }) => ({
       requests: true,
     },
   },
-  // Ensure server starts properly
-  server: {
-    socket: env('SOCKET'),
-  },
 });

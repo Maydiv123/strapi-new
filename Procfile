@@ -1,1 +1,1 @@
-web: npm run develop -- --no-build 
+web: npm run develop 

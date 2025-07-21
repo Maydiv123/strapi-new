@@ -58,4 +58,4 @@ Feel free to check out the [Strapi GitHub repository](https://github.com/strapi/
 
 ---
 
-<!-- Force Railway rebuild - Development mode fixes applied -->
+<!-- Fixed Procfile - removed invalid --no-build flag -->
