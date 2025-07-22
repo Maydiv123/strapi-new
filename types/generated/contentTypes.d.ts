@@ -410,6 +410,38 @@ export interface AdminUser extends Struct.CollectionTypeSchema {
   };
 }
 
+export interface ApiSeoMetadataSeoMetadata extends Struct.CollectionTypeSchema {
+  collectionName: 'seo_metadatas';
+  info: {
+    displayName: 'SEO Metadata';
+    pluralName: 'seo-metadatas';
+    singularName: 'seo-metadata';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    canonical_url: Schema.Attribute.Text;
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::seo-metadata.seo-metadata'
+    > &
+      Schema.Attribute.Private;
+    meta_description: Schema.Attribute.Text;
+    meta_keywords: Schema.Attribute.Text;
+    page_slug: Schema.Attribute.UID<'page_title'>;
+    page_title: Schema.Attribute.String;
+    publishedAt: Schema.Attribute.DateTime;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
 export interface PluginContentReleasesRelease
   extends Struct.CollectionTypeSchema {
   collectionName: 'strapi_releases';
@@ -920,6 +952,7 @@ declare module '@strapi/strapi' {
       'admin::transfer-token': AdminTransferToken;
       'admin::transfer-token-permission': AdminTransferTokenPermission;
       'admin::user': AdminUser;
+      'api::seo-metadata.seo-metadata': ApiSeoMetadataSeoMetadata;
       'plugin::content-releases.release': PluginContentReleasesRelease;
       'plugin::content-releases.release-action': PluginContentReleasesReleaseAction;
       'plugin::i18n.locale': PluginI18NLocale;

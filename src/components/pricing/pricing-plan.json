@@ -1,0 +1,43 @@
+{
+  "collectionName": "components_pricing_pricing_plans",
+  "info": {
+    "displayName": "pricing-plan"
+  },
+  "options": {},
+  "attributes": {
+    "plan_name": {
+      "type": "string"
+    },
+    "price": {
+      "type": "decimal"
+    },
+    "currency": {
+      "type": "enumeration",
+      "enum": [
+        "USD",
+        "EUR",
+        "GBP",
+        "INR"
+      ]
+    },
+    "billing_period": {
+      "type": "enumeration",
+      "enum": [
+        "one_time",
+        "monthly",
+        "quarterly",
+        "yearly"
+      ]
+    },
+    "features": {
+      "type": "json"
+    },
+    "is_popular": {
+      "type": "boolean"
+    },
+    "description": {
+      "type": "text"
+    }
+  },
+  "config": {}
+}

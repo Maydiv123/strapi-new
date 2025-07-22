@@ -1,0 +1,31 @@
+{
+  "kind": "collectionType",
+  "collectionName": "seo_metadatas",
+  "info": {
+    "singularName": "seo-metadata",
+    "pluralName": "seo-metadatas",
+    "displayName": "SEO Metadata"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "page_title": {
+      "type": "string"
+    },
+    "meta_description": {
+      "type": "text"
+    },
+    "meta_keywords": {
+      "type": "text"
+    },
+    "canonical_url": {
+      "type": "text"
+    },
+    "page_slug": {
+      "type": "uid",
+      "targetField": "page_title"
+    }
+  }
+}
