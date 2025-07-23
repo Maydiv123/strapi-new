@@ -410,6 +410,68 @@ export interface AdminUser extends Struct.CollectionTypeSchema {
   };
 }
 
+export interface ApiBlogPostBlogPost extends Struct.CollectionTypeSchema {
+  collectionName: 'blog_posts';
+  info: {
+    displayName: 'Blog Post';
+    pluralName: 'blog-posts';
+    singularName: 'blog-post';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    author: Schema.Attribute.String;
+    category: Schema.Attribute.Enumeration<
+      [
+        'web_development',
+        'app_development',
+        'ai_services',
+        'marketing',
+        'ui_ux',
+        'technology',
+        'business',
+      ]
+    >;
+    content: Schema.Attribute.Text & Schema.Attribute.Required;
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    excerpt: Schema.Attribute.Text;
+    featured_image: Schema.Attribute.Media<
+      'images' | 'files' | 'videos' | 'audios'
+    >;
+    gallery: Schema.Attribute.Media<
+      'images' | 'files' | 'videos' | 'audios',
+      true
+    >;
+    is_featured: Schema.Attribute.Boolean;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::blog-post.blog-post'
+    > &
+      Schema.Attribute.Private;
+    published_a: Schema.Attribute.DateTime;
+    publishedAt: Schema.Attribute.DateTime;
+    reading_time: Schema.Attribute.Integer;
+    related_posts: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::blog-post.blog-post'
+    >;
+    seo: Schema.Attribute.Relation<
+      'oneToOne',
+      'api::seo-metadata.seo-metadata'
+    >;
+    slug: Schema.Attribute.String;
+    tags: Schema.Attribute.JSON;
+    title: Schema.Attribute.Text;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
 export interface ApiSeoMetadataSeoMetadata extends Struct.CollectionTypeSchema {
   collectionName: 'seo_metadatas';
   info: {
@@ -422,9 +484,13 @@ export interface ApiSeoMetadataSeoMetadata extends Struct.CollectionTypeSchema {
   };
   attributes: {
     canonical_url: Schema.Attribute.Text;
+    changefreq: Schema.Attribute.Enumeration<
+      ['always', 'hourly', 'daily', 'weekly', 'monthly', 'yearly', 'never']
+    >;
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
+    last_modified: Schema.Attribute.DateTime;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<
       'oneToMany',
@@ -433,9 +499,99 @@ export interface ApiSeoMetadataSeoMetadata extends Struct.CollectionTypeSchema {
       Schema.Attribute.Private;
     meta_description: Schema.Attribute.Text;
     meta_keywords: Schema.Attribute.Text;
+    notes: Schema.Attribute.Text;
+    og_description: Schema.Attribute.String;
+    og_image: Schema.Attribute.String;
+    og_title: Schema.Attribute.String;
     page_slug: Schema.Attribute.UID<'page_title'>;
     page_title: Schema.Attribute.String;
+    page_type: Schema.Attribute.Enumeration<
+      [
+        'homepage',
+        'about',
+        'services',
+        'portfolio',
+        'blog',
+        'contact ai_services',
+        'app_development',
+        'web_development',
+        'marketing',
+        'ui_ux',
+      ]
+    >;
+    priority: Schema.Attribute.Decimal;
     publishedAt: Schema.Attribute.DateTime;
+    robots_meta: Schema.Attribute.Enumeration<
+      ['index', 'follow', 'noindex', 'nofollow']
+    > &
+      Schema.Attribute.DefaultTo<'index'>;
+    schema_markup: Schema.Attribute.JSON;
+    seo_score: Schema.Attribute.Integer;
+    structured_data: Schema.Attribute.JSON;
+    target_keywords: Schema.Attribute.JSON;
+    twitter_description: Schema.Attribute.Text;
+    twitter_image: Schema.Attribute.Media<
+      'images' | 'files' | 'videos' | 'audios'
+    >;
+    twitter_title: Schema.Attribute.String;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
+export interface ApiServiceService extends Struct.CollectionTypeSchema {
+  collectionName: 'services';
+  info: {
+    displayName: 'Service';
+    pluralName: 'services';
+    singularName: 'service';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    description: Schema.Attribute.Blocks;
+    featured_image: Schema.Attribute.Media<
+      'images' | 'files' | 'videos' | 'audios'
+    >;
+    features: Schema.Attribute.JSON;
+    gallery: Schema.Attribute.Media<
+      'images' | 'files' | 'videos' | 'audios',
+      true
+    >;
+    icon: Schema.Attribute.Media<'images' | 'files' | 'videos' | 'audios'>;
+    is_featured: Schema.Attribute.Boolean;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::service.service'
+    > &
+      Schema.Attribute.Private;
+    order: Schema.Attribute.Integer;
+    pricing_plans: Schema.Attribute.Component<'pricing.pricing-plan', true>;
+    publishedAt: Schema.Attribute.DateTime;
+    seo: Schema.Attribute.Relation<
+      'oneToOne',
+      'api::seo-metadata.seo-metadata'
+    >;
+    service_category: Schema.Attribute.Enumeration<
+      [
+        'ai_services',
+        'app_development',
+        'web_development',
+        'marketing',
+        'ui_ux_design',
+        'consulting',
+      ]
+    >;
+    short_description: Schema.Attribute.Text;
+    slug: Schema.Attribute.UID<'title'>;
+    technologies: Schema.Attribute.JSON;
+    title: Schema.Attribute.String & Schema.Attribute.Required;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -952,7 +1108,9 @@ declare module '@strapi/strapi' {
       'admin::transfer-token': AdminTransferToken;
       'admin::transfer-token-permission': AdminTransferTokenPermission;
       'admin::user': AdminUser;
+      'api::blog-post.blog-post': ApiBlogPostBlogPost;
       'api::seo-metadata.seo-metadata': ApiSeoMetadataSeoMetadata;
+      'api::service.service': ApiServiceService;
       'plugin::content-releases.release': PluginContentReleasesRelease;
       'plugin::content-releases.release-action': PluginContentReleasesReleaseAction;
       'plugin::i18n.locale': PluginI18NLocale;

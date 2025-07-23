@@ -1,0 +1,28 @@
+{
+  "collectionName": "components_contact_contact_infos",
+  "info": {
+    "displayName": "contact-info"
+  },
+  "options": {},
+  "attributes": {
+    "type": {
+      "type": "enumeration",
+      "enum": [
+        "email",
+        "phone",
+        "address",
+        "social"
+      ]
+    },
+    "value": {
+      "type": "string"
+    },
+    "icon": {
+      "type": "string"
+    },
+    "is_primary": {
+      "type": "boolean"
+    }
+  },
+  "config": {}
+}

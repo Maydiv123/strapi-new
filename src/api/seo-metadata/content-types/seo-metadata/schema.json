@@ -26,6 +26,89 @@
     "page_slug": {
       "type": "uid",
       "targetField": "page_title"
+    },
+    "og_title": {
+      "type": "string"
+    },
+    "og_description": {
+      "type": "string"
+    },
+    "og_image": {
+      "type": "string"
+    },
+    "twitter_title": {
+      "type": "string"
+    },
+    "twitter_description": {
+      "type": "text"
+    },
+    "twitter_image": {
+      "type": "media",
+      "multiple": false,
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos",
+        "audios"
+      ]
+    },
+    "page_type": {
+      "type": "enumeration",
+      "enum": [
+        "homepage",
+        "about",
+        "services",
+        "portfolio",
+        "blog",
+        "contact ai_services",
+        "app_development",
+        "web_development",
+        "marketing",
+        "ui_ux"
+      ]
+    },
+    "robots_meta": {
+      "type": "enumeration",
+      "default": "index",
+      "enum": [
+        "index",
+        "follow",
+        "noindex",
+        "nofollow"
+      ]
+    },
+    "priority": {
+      "type": "decimal"
+    },
+    "changefreq": {
+      "type": "enumeration",
+      "enum": [
+        "always",
+        "hourly",
+        "daily",
+        "weekly",
+        "monthly",
+        "yearly",
+        "never"
+      ]
+    },
+    "last_modified": {
+      "type": "datetime"
+    },
+    "schema_markup": {
+      "type": "json"
+    },
+    "structured_data": {
+      "type": "json"
+    },
+    "target_keywords": {
+      "type": "json"
+    },
+    "seo_score": {
+      "type": "integer"
+    },
+    "notes": {
+      "type": "text"
     }
   }
 }
