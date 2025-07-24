@@ -1,0 +1,86 @@
+{
+  "kind": "collectionType",
+  "collectionName": "testimonials",
+  "info": {
+    "singularName": "testimonial",
+    "pluralName": "testimonials",
+    "displayName": "Testimonial"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "client_name": {
+      "type": "string",
+      "maxLength": 100,
+      "required": true
+    },
+    "client_position": {
+      "type": "string",
+      "maxLength": 100,
+      "required": true
+    },
+    "company_name": {
+      "type": "string",
+      "maxLength": 100,
+      "required": true
+    },
+    "testimonial_text": {
+      "type": "text",
+      "required": true
+    },
+    "rating": {
+      "type": "integer",
+      "required": true,
+      "default": 5
+    },
+    "client_photo": {
+      "type": "media",
+      "multiple": false,
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos",
+        "audios"
+      ]
+    },
+    "company_logo": {
+      "type": "media",
+      "multiple": false,
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos",
+        "audios"
+      ]
+    },
+    "project_name": {
+      "type": "string",
+      "maxLength": 100
+    },
+    "is_featured": {
+      "type": "boolean",
+      "default": false
+    },
+    "testimonial_date": {
+      "type": "date"
+    },
+    "verified": {
+      "type": "boolean",
+      "default": true
+    },
+    "services": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::service.service",
+      "inversedBy": "testimonials"
+    },
+    "portfolios": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::portfolio.portfolio",
+      "inversedBy": "testimonials"
+    }
+  }
+}

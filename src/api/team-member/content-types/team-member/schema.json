@@ -1,0 +1,71 @@
+{
+  "kind": "collectionType",
+  "collectionName": "team_members",
+  "info": {
+    "singularName": "team-member",
+    "pluralName": "team-members",
+    "displayName": "Team Member"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "name": {
+      "type": "string",
+      "maxLength": 100,
+      "required": true
+    },
+    "position": {
+      "type": "string",
+      "maxLength": 100,
+      "required": true
+    },
+    "bio": {
+      "type": "text"
+    },
+    "email": {
+      "type": "email"
+    },
+    "phone": {
+      "type": "string",
+      "maxLength": 20
+    },
+    "photo": {
+      "type": "media",
+      "multiple": false,
+      "required": true,
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos",
+        "audios"
+      ]
+    },
+    "social_links": {
+      "type": "json"
+    },
+    "skills": {
+      "type": "json"
+    },
+    "experience_years": {
+      "type": "integer"
+    },
+    "specializations": {
+      "type": "json"
+    },
+    "is_featured": {
+      "type": "boolean",
+      "default": false
+    },
+    "order": {
+      "type": "integer",
+      "default": 0
+    },
+    "seo_metadatum": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::seo-metadata.seo-metadata"
+    }
+  }
+}

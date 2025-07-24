@@ -107,43 +107,6 @@ export interface AdminApiTokenPermission extends Struct.CollectionTypeSchema {
   };
 }
 
-export interface AdminAuditLog extends Struct.CollectionTypeSchema {
-  collectionName: 'strapi_audit_logs';
-  info: {
-    displayName: 'Audit Log';
-    pluralName: 'audit-logs';
-    singularName: 'audit-log';
-  };
-  options: {
-    draftAndPublish: false;
-    timestamps: false;
-  };
-  pluginOptions: {
-    'content-manager': {
-      visible: false;
-    };
-    'content-type-builder': {
-      visible: false;
-    };
-  };
-  attributes: {
-    action: Schema.Attribute.String & Schema.Attribute.Required;
-    createdAt: Schema.Attribute.DateTime;
-    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
-      Schema.Attribute.Private;
-    date: Schema.Attribute.DateTime & Schema.Attribute.Required;
-    locale: Schema.Attribute.String & Schema.Attribute.Private;
-    localizations: Schema.Attribute.Relation<'oneToMany', 'admin::audit-log'> &
-      Schema.Attribute.Private;
-    payload: Schema.Attribute.JSON;
-    publishedAt: Schema.Attribute.DateTime;
-    updatedAt: Schema.Attribute.DateTime;
-    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
-      Schema.Attribute.Private;
-    user: Schema.Attribute.Relation<'oneToOne', 'admin::user'>;
-  };
-}
-
 export interface AdminPermission extends Struct.CollectionTypeSchema {
   collectionName: 'admin_permissions';
   info: {
@@ -472,6 +435,101 @@ export interface ApiBlogPostBlogPost extends Struct.CollectionTypeSchema {
   };
 }
 
+export interface ApiPortfolioPortfolio extends Struct.CollectionTypeSchema {
+  collectionName: 'portfolios';
+  info: {
+    displayName: 'Portfolio';
+    pluralName: 'portfolios';
+    singularName: 'portfolio';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    before_after_images: Schema.Attribute.Media<
+      'images' | 'files' | 'videos' | 'audios',
+      true
+    >;
+    budget_range: Schema.Attribute.String &
+      Schema.Attribute.SetMinMaxLength<{
+        maxLength: 50;
+      }>;
+    client_name: Schema.Attribute.String &
+      Schema.Attribute.Required &
+      Schema.Attribute.SetMinMaxLength<{
+        maxLength: 100;
+      }>;
+    completion_date: Schema.Attribute.Date;
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    des: Schema.Attribute.Blocks;
+    description: Schema.Attribute.Blocks & Schema.Attribute.Required;
+    featured_image: Schema.Attribute.Media<
+      'images' | 'files' | 'videos' | 'audios'
+    > &
+      Schema.Attribute.Required;
+    gallery: Schema.Attribute.Media<
+      'images' | 'files' | 'videos' | 'audios',
+      true
+    >;
+    is_featured: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<false>;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::portfolio.portfolio'
+    > &
+      Schema.Attribute.Private;
+    metrics: Schema.Attribute.JSON;
+    project_duration: Schema.Attribute.String &
+      Schema.Attribute.SetMinMaxLength<{
+        maxLength: 50;
+      }>;
+    project_type: Schema.Attribute.Enumeration<
+      [
+        'web_development',
+        'app_development',
+        'ai_services',
+        'ui_ux_design',
+        'marketing',
+      ]
+    > &
+      Schema.Attribute.Required;
+    project_url: Schema.Attribute.String &
+      Schema.Attribute.Required &
+      Schema.Attribute.SetMinMaxLength<{
+        maxLength: 255;
+      }>;
+    publishedAt: Schema.Attribute.DateTime;
+    results_summary: Schema.Attribute.String;
+    seo: Schema.Attribute.Relation<
+      'oneToOne',
+      'api::seo-metadata.seo-metadata'
+    >;
+    services: Schema.Attribute.Relation<'manyToOne', 'api::service.service'>;
+    short_description: Schema.Attribute.Text &
+      Schema.Attribute.Required &
+      Schema.Attribute.SetMinMaxLength<{
+        maxLength: 200;
+      }>;
+    slug: Schema.Attribute.UID & Schema.Attribute.Required;
+    team_size: Schema.Attribute.Integer;
+    technologies_used: Schema.Attribute.JSON;
+    testimonials: Schema.Attribute.Relation<
+      'manyToMany',
+      'api::testimonial.testimonial'
+    >;
+    title: Schema.Attribute.String &
+      Schema.Attribute.Required &
+      Schema.Attribute.SetMinMaxLength<{
+        maxLength: 100;
+      }>;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
 export interface ApiSeoMetadataSeoMetadata extends Struct.CollectionTypeSchema {
   collectionName: 'seo_metadatas';
   info: {
@@ -572,6 +630,10 @@ export interface ApiServiceService extends Struct.CollectionTypeSchema {
     > &
       Schema.Attribute.Private;
     order: Schema.Attribute.Integer;
+    portfolios: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::portfolio.portfolio'
+    >;
     pricing_plans: Schema.Attribute.Component<'pricing.pricing-plan', true>;
     publishedAt: Schema.Attribute.DateTime;
     seo: Schema.Attribute.Relation<
@@ -591,10 +653,133 @@ export interface ApiServiceService extends Struct.CollectionTypeSchema {
     short_description: Schema.Attribute.Text;
     slug: Schema.Attribute.UID<'title'>;
     technologies: Schema.Attribute.JSON;
+    testimonials: Schema.Attribute.Relation<
+      'manyToMany',
+      'api::testimonial.testimonial'
+    >;
     title: Schema.Attribute.String & Schema.Attribute.Required;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
+  };
+}
+
+export interface ApiTeamMemberTeamMember extends Struct.CollectionTypeSchema {
+  collectionName: 'team_members';
+  info: {
+    displayName: 'Team Member';
+    pluralName: 'team-members';
+    singularName: 'team-member';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    bio: Schema.Attribute.Text;
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    email: Schema.Attribute.Email;
+    experience_years: Schema.Attribute.Integer;
+    is_featured: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<false>;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::team-member.team-member'
+    > &
+      Schema.Attribute.Private;
+    name: Schema.Attribute.String &
+      Schema.Attribute.Required &
+      Schema.Attribute.SetMinMaxLength<{
+        maxLength: 100;
+      }>;
+    order: Schema.Attribute.Integer & Schema.Attribute.DefaultTo<0>;
+    phone: Schema.Attribute.String &
+      Schema.Attribute.SetMinMaxLength<{
+        maxLength: 20;
+      }>;
+    photo: Schema.Attribute.Media<'images' | 'files' | 'videos' | 'audios'> &
+      Schema.Attribute.Required;
+    position: Schema.Attribute.String &
+      Schema.Attribute.Required &
+      Schema.Attribute.SetMinMaxLength<{
+        maxLength: 100;
+      }>;
+    publishedAt: Schema.Attribute.DateTime;
+    seo_metadatum: Schema.Attribute.Relation<
+      'oneToOne',
+      'api::seo-metadata.seo-metadata'
+    >;
+    skills: Schema.Attribute.JSON;
+    social_links: Schema.Attribute.JSON;
+    specializations: Schema.Attribute.JSON;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
+export interface ApiTestimonialTestimonial extends Struct.CollectionTypeSchema {
+  collectionName: 'testimonials';
+  info: {
+    displayName: 'Testimonial';
+    pluralName: 'testimonials';
+    singularName: 'testimonial';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    client_name: Schema.Attribute.String &
+      Schema.Attribute.Required &
+      Schema.Attribute.SetMinMaxLength<{
+        maxLength: 100;
+      }>;
+    client_photo: Schema.Attribute.Media<
+      'images' | 'files' | 'videos' | 'audios'
+    >;
+    client_position: Schema.Attribute.String &
+      Schema.Attribute.Required &
+      Schema.Attribute.SetMinMaxLength<{
+        maxLength: 100;
+      }>;
+    company_logo: Schema.Attribute.Media<
+      'images' | 'files' | 'videos' | 'audios'
+    >;
+    company_name: Schema.Attribute.String &
+      Schema.Attribute.Required &
+      Schema.Attribute.SetMinMaxLength<{
+        maxLength: 100;
+      }>;
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    is_featured: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<false>;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::testimonial.testimonial'
+    > &
+      Schema.Attribute.Private;
+    portfolios: Schema.Attribute.Relation<
+      'manyToMany',
+      'api::portfolio.portfolio'
+    >;
+    project_name: Schema.Attribute.String &
+      Schema.Attribute.SetMinMaxLength<{
+        maxLength: 100;
+      }>;
+    publishedAt: Schema.Attribute.DateTime;
+    rating: Schema.Attribute.Integer &
+      Schema.Attribute.Required &
+      Schema.Attribute.DefaultTo<5>;
+    services: Schema.Attribute.Relation<'manyToMany', 'api::service.service'>;
+    testimonial_date: Schema.Attribute.Date;
+    testimonial_text: Schema.Attribute.Text & Schema.Attribute.Required;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    verified: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<true>;
   };
 }
 
@@ -1102,15 +1287,17 @@ declare module '@strapi/strapi' {
     export interface ContentTypeSchemas {
       'admin::api-token': AdminApiToken;
       'admin::api-token-permission': AdminApiTokenPermission;
-      'admin::audit-log': AdminAuditLog;
       'admin::permission': AdminPermission;
       'admin::role': AdminRole;
       'admin::transfer-token': AdminTransferToken;
       'admin::transfer-token-permission': AdminTransferTokenPermission;
       'admin::user': AdminUser;
       'api::blog-post.blog-post': ApiBlogPostBlogPost;
+      'api::portfolio.portfolio': ApiPortfolioPortfolio;
       'api::seo-metadata.seo-metadata': ApiSeoMetadataSeoMetadata;
       'api::service.service': ApiServiceService;
+      'api::team-member.team-member': ApiTeamMemberTeamMember;
+      'api::testimonial.testimonial': ApiTestimonialTestimonial;
       'plugin::content-releases.release': PluginContentReleasesRelease;
       'plugin::content-releases.release-action': PluginContentReleasesReleaseAction;
       'plugin::i18n.locale': PluginI18NLocale;

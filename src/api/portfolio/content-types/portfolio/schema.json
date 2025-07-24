@@ -1,0 +1,134 @@
+{
+  "kind": "collectionType",
+  "collectionName": "portfolios",
+  "info": {
+    "singularName": "portfolio",
+    "pluralName": "portfolios",
+    "displayName": "Portfolio"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "title": {
+      "type": "string",
+      "maxLength": 100,
+      "required": true
+    },
+    "slug": {
+      "type": "uid",
+      "required": true
+    },
+    "des": {
+      "type": "blocks"
+    },
+    "description": {
+      "type": "blocks",
+      "required": true
+    },
+    "short_description": {
+      "type": "text",
+      "maxLength": 200,
+      "required": true
+    },
+    "client_name": {
+      "type": "string",
+      "maxLength": 100,
+      "required": true
+    },
+    "project_url": {
+      "type": "string",
+      "maxLength": 255,
+      "required": true
+    },
+    "featured_image": {
+      "type": "media",
+      "multiple": false,
+      "required": true,
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos",
+        "audios"
+      ]
+    },
+    "gallery": {
+      "type": "media",
+      "multiple": true,
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos",
+        "audios"
+      ]
+    },
+    "before_after_images": {
+      "type": "media",
+      "multiple": true,
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos",
+        "audios"
+      ]
+    },
+    "project_type": {
+      "type": "enumeration",
+      "required": true,
+      "enum": [
+        "web_development",
+        "app_development",
+        "ai_services",
+        "ui_ux_design",
+        "marketing"
+      ]
+    },
+    "technologies_used": {
+      "type": "json"
+    },
+    "project_duration": {
+      "type": "string",
+      "maxLength": 50,
+      "required": false
+    },
+    "team_size": {
+      "type": "integer"
+    },
+    "budget_range": {
+      "type": "string",
+      "maxLength": 50,
+      "required": false
+    },
+    "results_summary": {
+      "type": "string"
+    },
+    "metrics": {
+      "type": "json"
+    },
+    "is_featured": {
+      "type": "boolean",
+      "default": false
+    },
+    "completion_date": {
+      "type": "date"
+    },
+    "seo": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::seo-metadata.seo-metadata"
+    },
+    "services": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::service.service",
+      "inversedBy": "portfolios"
+    },
+    "testimonials": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::testimonial.testimonial",
+      "mappedBy": "portfolios"
+    }
+  }
+}

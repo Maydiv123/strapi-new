@@ -87,6 +87,18 @@
       "type": "relation",
       "relation": "oneToOne",
       "target": "api::seo-metadata.seo-metadata"
+    },
+    "portfolios": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::portfolio.portfolio",
+      "mappedBy": "services"
+    },
+    "testimonials": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::testimonial.testimonial",
+      "mappedBy": "services"
     }
   }
 }
